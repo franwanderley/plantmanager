@@ -3,12 +3,19 @@ import {
    Image, Text, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions 
 } from 'react-native';
 import { FontAwesome as Icon } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import watering from './../assets/watering.png';
 
 export function Welcome(){
+   const navigation = useNavigation();
+
+   function handleStart(){
+      navigation.navigate('UserIdentification');
+   }
+
    return (
       <SafeAreaView style={style.container}>
          <Text style={style.title}>
@@ -22,6 +29,7 @@ export function Welcome(){
          <TouchableOpacity 
             style={style.button} 
             activeOpacity={0.6}
+            onPress={handleStart}
          >
             <Icon name='angle-right' style={style.buttonIcon}/>
          </TouchableOpacity>
