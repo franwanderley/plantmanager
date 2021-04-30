@@ -14,32 +14,23 @@ import { Header } from '../components/Header';
 import { PlantCardPrimary } from '../components/PlantCardPrimary';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { useNavigation } from '@react-navigation/core';
+import { PlantProps } from '../libs/storage';
 
 interface EnviromentProps {
    key: string;
    title: string;
 }
-interface PlantProps{
-   id: number;
-   name: string;
-   about: string;
-   water_tips: string;
-   photo: string;
-   environments: [string];
-   frequency: {
-      times: number;
-      repeat_every: string;
-   }
-}
 
 export function PlantSelect(){
+   const navigate = useNavigation();
    const [enviroment,setEnviroment] = useState<EnviromentProps[]>([]);
    const [enviromentSelected,setEnviromentSelected] = useState('all');
    const [plants,setPlants] = useState<PlantProps[]>([]);
    const [filteredPlants,setFilteredPlants] = useState<PlantProps[]>([]);
    const [loading, setLoading] = useState(true);
-   const [page, setPage] = useState(1);
    const [loadingMore, setLoadingMore] = useState(false);
+   const [page, setPage] = useState(1);
    
    //Vai pegar as Plantas
    async function fetchPlants(){
@@ -120,7 +111,7 @@ export function PlantSelect(){
                   data={enviroment}
                   renderItem={({item}) => (
                      <EnviromentButton 
-                        key={item.key} 
+                        key={String(item.key)} 
                         title={item.title}
                         active={item.key === enviromentSelected}
                         onPress={() => setEnviromentSelected(item.key)}
@@ -135,7 +126,11 @@ export function PlantSelect(){
                <FlatList
                   data={filteredPlants}
                   renderItem={({item}) => (
-                     <PlantCardPrimary key={item.id} data={item}/>
+                     <PlantCardPrimary 
+                     key={String(item.id)} 
+                     data={item}
+                     onPress={() => navigate.navigate('PlantSave', {plant: item})}
+                  />
                   )}
                   showsVerticalScrollIndicator={false}
                   numColumns={2}

@@ -8,21 +8,38 @@ import {
    View, 
    KeyboardAvoidingView, //para não subir muito alto quando tiver o teclado
    TouchableWithoutFeedback, //Quando clicar na tela sumir o teclado
-   Platform, 
-   Keyboard
+   Platform, //Definir qual a plataforma IOS | Android
+   Keyboard, //Para controlar o teclado do Device
+   Alert
 } from 'react-native';
-import { Button } from '../components/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { Button } from '../components/Button';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 export function UserIdentification(){
    const navigation = useNavigation();
    const [isFocused, setIsFocused] = useState(false);
-   const [name, setName] = useState<String>();
+   const [name, setName] = useState<string>();
 
-   function handleSubmit(){
-      navigation.navigate('Confirmation');
+   async function handleSubmit(){
+      if(!name)
+         return Alert.alert('Nome Obrigatorio! 😔');
+
+      //Vai salvar o nome
+      try{
+         await AsyncStorage.setItem('@plantmanager:user', name);
+      }catch{
+         Alert.alert('Deu erro ao salvar no seu dispositivo! 😔');
+      }
+      navigation.navigate('Confirmation', {
+         title: 'Prontinho',
+         subtitle: 'Agora vamos cuidar das suas plantinhas com muito cuidado',
+         buttonTitle: 'Começar',
+         icon: '😄',
+         nextScreen: 'PlantSelect',
+      });
    }
 
    return (
