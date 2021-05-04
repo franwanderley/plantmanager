@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Image, Platform, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SvgFromUri } from 'react-native-svg';
 import { useNavigation, useRoute } from '@react-navigation/core';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
@@ -11,7 +11,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import waterdrop from '../assets/waterdrop.png';
 import { Button } from '../components/Button';
-import { loadPlant, PlantProps, savePlant } from '../libs/storage';
+import { PlantProps, savePlant } from '../libs/storage';
 
 interface Param{
    plant: PlantProps
@@ -56,48 +56,52 @@ export function PlantSave(){
       }
    }
 
-
    return (
-      <View style={styles.container}>
-         <View style={styles.plantInfo}>
-            <SvgFromUri uri={plant?.photo} height={150} width={150}/>
-            <Text style={styles.plantName}>
-               {plant?.name}
-            </Text>
-            <Text style={styles.plantAbout}>
-               {plant?.about}
-            </Text>
-         </View>
-         <View style={styles.controler}>
-            <View style={styles.tipContainer}>
-               <Image source={waterdrop} style={styles.tipImage} />
-               <Text style={styles.tipText}>
-                  {plant?.water_tips}
+      <ScrollView //Caso a pagina for grande demais e não caber
+         showsVerticalScrollIndicator={false}
+         contentContainerStyle={styles.container}
+      >
+         <View style={styles.container}>
+            <View style={styles.plantInfo}>
+               <SvgFromUri uri={plant?.photo} height={150} width={150}/>
+               <Text style={styles.plantName}>
+                  {plant?.name}
+               </Text>
+               <Text style={styles.plantAbout}>
+                  {plant?.about}
                </Text>
             </View>
-            <Text style={styles.alertLabel}>
-               Escolha o melhor horário para ser lembrado: 
-            </Text>
-            {showDatePicker &&
-               <DateTimePicker 
-                  value={selectedDateTime} 
-                  mode="time"
-                  display="spinner"
-                  onChange={handleChangeTime}
+            <View style={styles.controler}>
+               <View style={styles.tipContainer}>
+                  <Image source={waterdrop} style={styles.tipImage} />
+                  <Text style={styles.tipText}>
+                     {plant?.water_tips}
+                  </Text>
+               </View>
+               <Text style={styles.alertLabel}>
+                  Escolha o melhor horário para ser lembrado: 
+               </Text>
+               {showDatePicker &&
+                  <DateTimePicker 
+                     value={selectedDateTime} 
+                     mode="time"
+                     display="spinner"
+                     onChange={handleChangeTime}
+                  />
+               }
+               <TouchableOpacity 
+                  onPress={() => setShowDatePicker(oldValue => !oldValue)}
+                  style={styles.dateTimePickerButton}
+               >
+                  <Text style={styles.dateTimePickerText}>Mudar {format(selectedDateTime, 'HH:mm')}</Text>  
+               </TouchableOpacity>
+               <Button 
+                  text="Cadastrar planta"
+                  onPress={handleSavePlant}
                />
-            }
-            <TouchableOpacity 
-               onPress={() => setShowDatePicker(oldValue => !oldValue)}
-               style={styles.dateTimePickerButton}
-            >
-               <Text style={styles.dateTimePickerText}>Mudar {format(selectedDateTime, 'HH:mm')}</Text>  
-            </TouchableOpacity>
-            <Button 
-               text="Cadastrar planta"
-               onPress={handleSavePlant}
-            />
+            </View>
          </View>
-      </View>
+      </ScrollView>
    );
 }
 
