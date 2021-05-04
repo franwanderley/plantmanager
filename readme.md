@@ -1,6 +1,6 @@
 <div style="display: flex; flex:1; align-items:center">
    <h1 style="text-align: center; vertical-align: center;">PlantManager <img src="./assets/favicon.png" alt="Logo"></h1>
-   <p>Aplicativo para dispositivos moveis Android | IOS feito em React Native durante  o Evento NLW#5(Next Level Week 5° edição) trilha React Native</p>
+   <p>Aplicativo para dispositivos moveis Android | IOS feito em React Native durante o Evento NLW#5(Next Level Week 5° edição) trilha React Native</p>
    <img src="./src/assets/PlantManager.png" alt="Resultado da Aplicação">
    <h3>🚀 Tecnologias Usadas</h3>
    <ul>
