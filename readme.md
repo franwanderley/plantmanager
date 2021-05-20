@@ -10,7 +10,7 @@
       <li>JSON-SERVER</li>
       <li>React Navigation</li>
    </ul>
-   <h3>📓 Como usar no seu PC</h3>
+   <h3>💻 Como usar no seu PC</h3>
    <ul>
       <li>Antes é preciso ter instalado o <a href="https://nodejs.org/en/">NodeJS</a> e o <a href="https://docs.expo.io/get-started/installation/">Expo Cli</a></li>
       <li>Dá um git clone neste repositorio</li>
